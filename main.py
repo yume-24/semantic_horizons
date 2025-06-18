@@ -39,8 +39,25 @@ stats_df = pd.DataFrame(columns=stats_columns)
 topic_inputs = [
     ("data/great_decision_expert_full.txt", "data/great_decision_novice_full.txt", "decision making"),
     # Add more topics below as needed
-    # ("data/vision_expert.txt", "data/vision_novice.txt", "vision"),
-    # ("data/ai_expert.txt", "data/ai_novice.txt", "AI"),
+    ("data/vision_expert.txt", "data/vision_novice.txt", "vision"),
+    ("data/ai_expert.txt", "data/ai_novice.txt", "AI"),
+    ("data/ai_expert_refined.txt", "data/ai_novice_refined.txt", "AI refined"),
+    ("data/arts_expert.txt", "data/arts_novice.txt", "arts"),
+    ("data/language_expert.txt", "data/language_novice.txt", "language"),
+    ("data/memory_expert.txt", "data/memory_novice.txt", "memory"),
+    ("data/mental_expert.txt", "data/mental_novice.txt", "mental health"),
+    ("data/mind_expert.txt", "data/mind_novice.txt", "mind"),
+    ("data/moral_expert.txt", "data/moral_novice.txt", "morals"),
+    ("data/music_expert.txt", "data/music_novice.txt", "robotics"),
+    ("data/time_expert.txt", "data/time_novice.txt", "time"),
+    ("data/good_creativity_expert_expanded.txt", "data/good_creativity_novice_expanded.txt", "creativity"),
+    ("data/good_language_acquisition_expert_freespeech.txt", "data/good_language_acquisition_novice_freespeech.txt", "language acquisition"),
+    ("data/good_nutrition_expert_expanded.txt", "data/good_nutrition_novice_expanded.txt", "creativity"),
+    ("data/bioacoustics_expert.txt", "data/bioacoustics_novice.txt", "bioacoustics"),
+    ("data/olfactory_expert.txt", "data/olfactory_novice.txt", "olfactory memory"),
+    ("data/speechlike_coral_expert.txt", "data/speechlike_coral_novice.txt", "coral"),
+    ("data/speechlike_crypto_expert.txt", "data/speechlike_crypto_novice.txt", "time"),
+    ("data/speechlike_dreama_expert.txt", "data/speechlike_dreams_novice.txt", "coral"),
 ]
 
 # Initialize DataFrame
