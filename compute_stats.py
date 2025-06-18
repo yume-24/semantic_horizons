@@ -38,6 +38,8 @@ def sanitize_stats(stats_dict):
                 cleaned_stats[k] = np.nan
     return cleaned_stats
 
+
+#a for novice, b for expert
 def compute_extended_stats(emb_a, emb_b):
     stats = {}
     all_embeddings = np.vstack([emb_a, emb_b])

@@ -8,8 +8,8 @@ os.makedirs("outputs", exist_ok=True)
 
 print("Current Working Directory:", os.getcwd())
 print("Files in data/:", os.listdir("data"))
-print("Expert file exists:", os.path.exists("data/great_decision_expert_full.txt"))
-print("Novice file exists:", os.path.exists("data/great_decision_novice_full.txt"))
+print("Expert file exists:", os.path.exists("data/vision_expert_full.txt"))
+print("Novice file exists:", os.path.exists("data/ai_expert.txt"))
 
 stats_columns = [
     "Centroid Distance (Euclidean)",
@@ -39,8 +39,7 @@ stats_df = pd.DataFrame(columns=stats_columns)
 topic_inputs = [
     ("data/great_decision_expert_full.txt", "data/great_decision_novice_full.txt", "decision making"),
     # Add more topics below as needed
-    ("data/vision_expert.txt", "data/vision_novice.txt", "vision"),
-    ("data/ai_expert.txt", "data/ai_novice.txt", "AI"),
+    ("data/vision_expert_full.txt", "data/vision_novice_full.txt", "vision"),
     ("data/ai_expert_refined.txt", "data/ai_novice_refined.txt", "AI refined"),
     ("data/arts_expert.txt", "data/arts_novice.txt", "arts"),
     ("data/language_expert.txt", "data/language_novice.txt", "language"),
@@ -52,12 +51,12 @@ topic_inputs = [
     ("data/time_expert.txt", "data/time_novice.txt", "time"),
     ("data/good_creativity_expert_expanded.txt", "data/good_creativity_novice_expanded.txt", "creativity"),
     ("data/good_language_acquisition_expert_freespeech.txt", "data/good_language_acquisition_novice_freespeech.txt", "language acquisition"),
-    ("data/good_nutrition_expert_expanded.txt", "data/good_nutrition_novice_expanded.txt", "creativity"),
+    ("data/good_nutrition_expert_expanded.txt", "data/good_nutrition_novice_expanded.txt", "nutrition"),
     ("data/bioacoustics_expert.txt", "data/bioacoustics_novice.txt", "bioacoustics"),
     ("data/olfactory_expert.txt", "data/olfactory_novice.txt", "olfactory memory"),
     ("data/speechlike_coral_expert.txt", "data/speechlike_coral_novice.txt", "coral"),
     ("data/speechlike_crypto_expert.txt", "data/speechlike_crypto_novice.txt", "time"),
-    ("data/speechlike_dreama_expert.txt", "data/speechlike_dreams_novice.txt", "coral"),
+    ("data/speechlike_dreams_expert.txt", "data/speechlike_dreams_novice.txt", "dreams")
 ]
 
 # Initialize DataFrame
