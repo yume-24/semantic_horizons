@@ -1,0 +1,234 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 750px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "Language evolution", "label": "Language evolution", "shape": "dot"}, {"color": "#97c2fc", "id": "the most interdisciplinary questions", "label": "the most interdisciplinary questions", "shape": "dot"}, {"color": "#97c2fc", "id": "it", "label": "it", "shape": "dot"}, {"color": "#97c2fc", "id": "biology", "label": "biology", "shape": "dot"}, {"color": "#97c2fc", "id": "cognition", "label": "cognition", "shape": "dot"}, {"color": "#97c2fc", "id": "anthropology", "label": "anthropology", "shape": "dot"}, {"color": "#97c2fc", "id": "linguistics", "label": "linguistics", "shape": "dot"}, {"color": "#97c2fc", "id": "is", "label": "is", "shape": "dot"}, {"color": "#97c2fc", "id": "evolution", "label": "evolution", "shape": "dot"}, {"color": "#97c2fc", "id": "one", "label": "one", "shape": "dot"}, {"color": "#97c2fc", "id": "of", "label": "of", "shape": "dot"}, {"color": "#97c2fc", "id": "touches", "label": "touches", "shape": "dot"}, {"color": "#97c2fc", "id": "at", "label": "at", "shape": "dot"}, {"color": "#97c2fc", "id": "The central puzzle", "label": "The central puzzle", "shape": "dot"}, {"color": "#97c2fc", "id": "a species", "label": "a species", "shape": "dot"}, {"color": "#97c2fc", "id": "that", "label": "that", "shape": "dot"}, {"color": "#97c2fc", "id": "gestures", "label": "gestures", "shape": "dot"}, {"color": "#97c2fc", "id": "vocalizations", "label": "vocalizations", "shape": "dot"}, {"color": "#97c2fc", "id": "complex, recursive symbolic systems", "label": "complex, recursive symbolic systems", "shape": "dot"}, {"color": "#97c2fc", "id": "modern language", "label": "modern language", "shape": "dot"}, {"color": "#97c2fc", "id": "puzzle", "label": "puzzle", "shape": "dot"}, {"color": "#97c2fc", "id": "develop", "label": "develop", "shape": "dot"}, {"color": "#97c2fc", "id": "species", "label": "species", "shape": "dot"}, {"color": "#97c2fc", "id": "relied", "label": "relied", "shape": "dot"}, {"color": "#97c2fc", "id": "on", "label": "on", "shape": "dot"}, {"color": "#97c2fc", "id": "systems", "label": "systems", "shape": "dot"}, {"color": "#97c2fc", "id": "like", "label": "like", "shape": "dot"}, {"color": "#97c2fc", "id": "One theory", "label": "One theory", "shape": "dot"}, {"color": "#97c2fc", "id": "proto-language", "label": "proto-language", "shape": "dot"}, {"color": "#97c2fc", "id": "gesture, not speech", "label": "gesture, not speech", "shape": "dot"}, {"color": "#97c2fc", "id": "suggests", "label": "suggests", "shape": "dot"}, {"color": "#97c2fc", "id": "theory", "label": "theory", "shape": "dot"}, {"color": "#97c2fc", "id": "started", "label": "started", "shape": "dot"}, {"color": "#97c2fc", "id": "language", "label": "language", "shape": "dot"}, {"color": "#97c2fc", "id": "with", "label": "with", "shape": "dot"}, {"color": "#97c2fc", "id": "Early hominins", "label": "Early hominins", "shape": "dot"}, {"color": "#97c2fc", "id": "hand movements", "label": "hand movements", "shape": "dot"}, {"color": "#97c2fc", "id": "facial expressions", "label": "facial expressions", "shape": "dot"}, {"color": "#97c2fc", "id": "primary tools", "label": "primary tools", "shape": "dot"}, {"color": "#97c2fc", "id": "communication", "label": "communication", "shape": "dot"}, {"color": "#97c2fc", "id": "noisy environments", "label": "noisy environments", "shape": "dot"}, {"color": "#97c2fc", "id": "used", "label": "used", "shape": "dot"}, {"color": "#97c2fc", "id": "hominins", "label": "hominins", "shape": "dot"}, {"color": "#97c2fc", "id": "movements", "label": "movements", "shape": "dot"}, {"color": "#97c2fc", "id": "as", "label": "as", "shape": "dot"}, {"color": "#97c2fc", "id": "tools", "label": "tools", "shape": "dot"}, {"color": "#97c2fc", "id": "for", "label": "for", "shape": "dot"}, {"color": "#97c2fc", "id": "in", "label": "in", "shape": "dot"}, {"color": "#97c2fc", "id": "time", "label": "time", "shape": "dot"}, {"color": "#97c2fc", "id": "vocalization", "label": "vocalization", "shape": "dot"}, {"color": "#97c2fc", "id": "the hands", "label": "the hands", "shape": "dot"}, {"color": "#97c2fc", "id": "multitasking", "label": "multitasking", "shape": "dot"}, {"color": "#97c2fc", "id": "distances", "label": "distances", "shape": "dot"}, {"color": "#97c2fc", "id": "the dark", "label": "the dark", "shape": "dot"}, {"color": "#97c2fc", "id": "took", "label": "took", "shape": "dot"}, {"color": "#97c2fc", "id": "Over", "label": "Over", "shape": "dot"}, {"color": "#97c2fc", "id": "freed", "label": "freed", "shape": "dot"}, {"color": "#97c2fc", "id": "hands", "label": "hands", "shape": "dot"}, {"color": "#97c2fc", "id": "enabling", "label": "enabling", "shape": "dot"}, {"color": "#97c2fc", "id": "across", "label": "across", "shape": "dot"}, {"color": "#97c2fc", "id": "A lot", "label": "A lot", "shape": "dot"}, {"color": "#97c2fc", "id": "discussion centers", "label": "discussion centers", "shape": "dot"}, {"color": "#97c2fc", "id": "recursion", "label": "recursion", "shape": "dot"}, {"color": "#97c2fc", "id": "our ability", "label": "our ability", "shape": "dot"}, {"color": "#97c2fc", "id": "ideas", "label": "ideas", "shape": "dot"}, {"color": "#97c2fc", "id": "other ideas", "label": "other ideas", "shape": "dot"}, {"color": "#97c2fc", "id": "the man", "label": "the man", "shape": "dot"}, {"color": "#97c2fc", "id": "who", "label": "who", "shape": "dot"}, {"color": "#97c2fc", "id": "the dog", "label": "the dog", "shape": "dot"}, {"color": "#97c2fc", "id": "the cat", "label": "the cat", "shape": "dot"}, {"color": "#97c2fc", "id": "lot", "label": "lot", "shape": "dot"}, {"color": "#97c2fc", "id": "centers", "label": "centers", "shape": "dot"}, {"color": "#97c2fc", "id": "nest", "label": "nest", "shape": "dot"}, {"color": "#97c2fc", "id": "within", "label": "within", "shape": "dot"}, {"color": "#97c2fc", "id": "ability", "label": "ability", "shape": "dot"}, {"color": "#97c2fc", "id": "saw", "label": "saw", "shape": "dot"}, {"color": "#97c2fc", "id": "dog", "label": "dog", "shape": "dot"}, {"color": "#97c2fc", "id": "chased", "label": "chased", "shape": "dot"}, {"color": "#97c2fc", "id": "cat", "label": "cat", "shape": "dot"}, {"color": "#97c2fc", "id": "No other species", "label": "No other species", "shape": "dot"}, {"color": "#97c2fc", "id": "this", "label": "this", "shape": "dot"}, {"color": "#97c2fc", "id": "seems", "label": "seems", "shape": "dot"}, {"color": "#97c2fc", "id": "do", "label": "do", "shape": "dot"}, {"color": "#97c2fc", "id": "It", "label": "It", "shape": "dot"}, {"color": "#97c2fc", "id": "something", "label": "something", "shape": "dot"}, {"color": "#97c2fc", "id": "our neural architecture", "label": "our neural architecture", "shape": "dot"}, {"color": "#97c2fc", "id": "hierarchical thought", "label": "hierarchical thought", "shape": "dot"}, {"color": "#97c2fc", "id": "the vehicle", "label": "the vehicle", "shape": "dot"}, {"color": "#97c2fc", "id": "enabled", "label": "enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "thought", "label": "thought", "shape": "dot"}, {"color": "#97c2fc", "id": "happened", "label": "happened", "shape": "dot"}, {"color": "#97c2fc", "id": "be", "label": "be", "shape": "dot"}, {"color": "#97c2fc", "id": "vehicle", "label": "vehicle", "shape": "dot"}, {"color": "#97c2fc", "id": "expressing", "label": "expressing", "shape": "dot"}, {"color": "#97c2fc", "id": "evidence", "label": "evidence", "shape": "dot"}, {"color": "#97c2fc", "id": "a gene", "label": "a gene", "shape": "dot"}, {"color": "#97c2fc", "id": "vocal control", "label": "vocal control", "shape": "dot"}, {"color": "#97c2fc", "id": "humans", "label": "humans", "shape": "dot"}, {"color": "#97c2fc", "id": "a way", "label": "a way", "shape": "dot"}, {"color": "#97c2fc", "id": "n\u2019t", "label": "n\u2019t", "shape": "dot"}, {"color": "#97c2fc", "id": "Neanderthals", "label": "Neanderthals", "shape": "dot"}, {"color": "#97c2fc", "id": "\u0027s", "label": "\u0027s", "shape": "dot"}, {"color": "#97c2fc", "id": "involved", "label": "involved", "shape": "dot"}, {"color": "#97c2fc", "id": "mutated", "label": "mutated", "shape": "dot"}, {"color": "#97c2fc", "id": "did", "label": "did", "shape": "dot"}, {"color": "#97c2fc", "id": "just one gene", "label": "just one gene", "shape": "dot"}, {"color": "#97c2fc", "id": "\u2019s", "label": "\u2019s", "shape": "dot"}, {"color": "#97c2fc", "id": "gene", "label": "gene", "shape": "dot"}, {"color": "#97c2fc", "id": "a learned behavior", "label": "a learned behavior", "shape": "dot"}, {"color": "#97c2fc", "id": "behavior", "label": "behavior", "shape": "dot"}, {"color": "#97c2fc", "id": "Syntax", "label": "Syntax", "shape": "dot"}, {"color": "#97c2fc", "id": "grammar", "label": "grammar", "shape": "dot"}, {"color": "#97c2fc", "id": "appear", "label": "appear", "shape": "dot"}, {"color": "#97c2fc", "id": "They", "label": "They", "shape": "dot"}, {"color": "#97c2fc", "id": "more fluid, context-based systems", "label": "more fluid, context-based systems", "shape": "dot"}, {"color": "#97c2fc", "id": "more rule-governed forms", "label": "more rule-governed forms", "shape": "dot"}, {"color": "#97c2fc", "id": "evolved", "label": "evolved", "shape": "dot"}, {"color": "#97c2fc", "id": "from", "label": "from", "shape": "dot"}, {"color": "#97c2fc", "id": "into", "label": "into", "shape": "dot"}, {"color": "#97c2fc", "id": "a vacuum", "label": "a vacuum", "shape": "dot"}, {"color": "#97c2fc", "id": "social complexity", "label": "social complexity", "shape": "dot"}, {"color": "#97c2fc", "id": "tool use", "label": "tool use", "shape": "dot"}, {"color": "#97c2fc", "id": "symbolic thinking", "label": "symbolic thinking", "shape": "dot"}, {"color": "#97c2fc", "id": "happen", "label": "happen", "shape": "dot"}, {"color": "#97c2fc", "id": "co", "label": "co", "shape": "dot"}, {"color": "#97c2fc", "id": "What", "label": "What", "shape": "dot"}, {"color": "#97c2fc", "id": "modern-day creole languages", "label": "modern-day creole languages", "shape": "dot"}, {"color": "#97c2fc", "id": "these theories", "label": "these theories", "shape": "dot"}, {"color": "#97c2fc", "id": "support", "label": "support", "shape": "dot"}, {"color": "#97c2fc", "id": "languages", "label": "languages", "shape": "dot"}, {"color": "#97c2fc", "id": "theories", "label": "theories", "shape": "dot"}, {"color": "#97c2fc", "id": "children", "label": "children", "shape": "dot"}, {"color": "#97c2fc", "id": "a simplified contact language", "label": "a simplified contact language", "shape": "dot"}, {"color": "#97c2fc", "id": "they", "label": "they", "shape": "dot"}, {"color": "#97c2fc", "id": "a full grammar", "label": "a full grammar", "shape": "dot"}, {"color": "#97c2fc", "id": "grow", "label": "grow", "shape": "dot"}, {"color": "#97c2fc", "id": "pidgin", "label": "pidgin", "shape": "dot"}, {"color": "#97c2fc", "id": "the brain", "label": "the brain", "shape": "dot"}, {"color": "#97c2fc", "id": "a kind", "label": "a kind", "shape": "dot"}, {"color": "#97c2fc", "id": "language-building blueprint", "label": "language-building blueprint", "shape": "dot"}, {"color": "#97c2fc", "id": "has", "label": "has", "shape": "dot"}, {"color": "#97c2fc", "id": "brain", "label": "brain", "shape": "dot"}, {"color": "#97c2fc", "id": "kind", "label": "kind", "shape": "dot"}, {"color": "#97c2fc", "id": "activates", "label": "activates", "shape": "dot"}, {"color": "#97c2fc", "id": "Modern computational models", "label": "Modern computational models", "shape": "dot"}, {"color": "#97c2fc", "id": "simple signaling systems", "label": "simple signaling systems", "shape": "dot"}, {"color": "#97c2fc", "id": "structured grammar", "label": "structured grammar", "shape": "dot"}, {"color": "#97c2fc", "id": "generations", "label": "generations", "shape": "dot"}, {"color": "#97c2fc", "id": "evolve", "label": "evolve", "shape": "dot"}, {"color": "#97c2fc", "id": "over", "label": "over", "shape": "dot"}, {"color": "#97c2fc", "id": "These simulations", "label": "These simulations", "shape": "dot"}, {"color": "#97c2fc", "id": "pressures", "label": "pressures", "shape": "dot"}, {"color": "#97c2fc", "id": "ambiguity reduction", "label": "ambiguity reduction", "shape": "dot"}, {"color": "#97c2fc", "id": "memory efficiency", "label": "memory efficiency", "shape": "dot"}, {"color": "#97c2fc", "id": "structure", "label": "structure", "shape": "dot"}, {"color": "#97c2fc", "id": "any central designer", "label": "any central designer", "shape": "dot"}, {"color": "#97c2fc", "id": "show", "label": "show", "shape": "dot"}, {"color": "#97c2fc", "id": "simulations", "label": "simulations", "shape": "dot"}, {"color": "#97c2fc", "id": "lead", "label": "lead", "shape": "dot"}, {"color": "#97c2fc", "id": "to", "label": "to", "shape": "dot"}, {"color": "#97c2fc", "id": "without", "label": "without", "shape": "dot"}, {"color": "#97c2fc", "id": "Language", "label": "Language", "shape": "dot"}, {"color": "#97c2fc", "id": "a static invention", "label": "a static invention", "shape": "dot"}, {"color": "#97c2fc", "id": "an emergent, adaptive system", "label": "an emergent, adaptive system", "shape": "dot"}, {"color": "#97c2fc", "id": "invention", "label": "invention", "shape": "dot"}, {"color": "#97c2fc", "id": "system", "label": "system", "shape": "dot"}, {"color": "#97c2fc", "id": "our species", "label": "our species", "shape": "dot"}, {"color": "#97c2fc", "id": "we", "label": "we", "shape": "dot"}, {"color": "#97c2fc", "id": "what", "label": "what", "shape": "dot"}, {"color": "#97c2fc", "id": "plan", "label": "plan", "shape": "dot"}, {"color": "#97c2fc", "id": "by", "label": "by", "shape": "dot"}, {"color": "#97c2fc", "id": "emerged", "label": "emerged", "shape": "dot"}, {"color": "#97c2fc", "id": "learn", "label": "learn", "shape": "dot"}, {"color": "#97c2fc", "id": "about", "label": "about", "shape": "dot"}, {"color": "#97c2fc", "id": "makes", "label": "makes", "shape": "dot"}, {"color": "#97c2fc", "id": "different", "label": "different", "shape": "dot"}, {"color": "#97c2fc", "id": "think", "label": "think", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "is", "title": "nsubj", "to": "evolution"}, {"arrows": "to", "from": "is", "title": "attr", "to": "one"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "puzzle"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "language"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "Language"}, {"arrows": "to", "from": "is", "title": "attr", "to": "invention"}, {"arrows": "to", "from": "one", "title": "prep", "to": "of"}, {"arrows": "to", "from": "touches", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "touches", "title": "dobj", "to": "biology"}, {"arrows": "to", "from": "touches", "title": "prep", "to": "at"}, {"arrows": "to", "from": "develop", "title": "nsubj", "to": "species"}, {"arrows": "to", "from": "develop", "title": "dobj", "to": "systems"}, {"arrows": "to", "from": "develop", "title": "nsubj", "to": "they"}, {"arrows": "to", "from": "develop", "title": "dobj", "to": "grammar"}, {"arrows": "to", "from": "relied", "title": "nsubj", "to": "that"}, {"arrows": "to", "from": "relied", "title": "prep", "to": "on"}, {"arrows": "to", "from": "systems", "title": "prep", "to": "like"}, {"arrows": "to", "from": "systems", "title": "prep", "to": "into"}, {"arrows": "to", "from": "suggests", "title": "nsubj", "to": "theory"}, {"arrows": "to", "from": "suggests", "title": "nsubj", "to": "It"}, {"arrows": "to", "from": "started", "title": "nsubj", "to": "language"}, {"arrows": "to", "from": "started", "title": "prep", "to": "with"}, {"arrows": "to", "from": "used", "title": "nsubj", "to": "hominins"}, {"arrows": "to", "from": "used", "title": "dobj", "to": "movements"}, {"arrows": "to", "from": "used", "title": "prep", "to": "as"}, {"arrows": "to", "from": "used", "title": "prep", "to": "in"}, {"arrows": "to", "from": "tools", "title": "prep", "to": "for"}, {"arrows": "to", "from": "took", "title": "prep", "to": "Over"}, {"arrows": "to", "from": "took", "title": "nsubj", "to": "vocalization"}, {"arrows": "to", "from": "freed", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "freed", "title": "dobj", "to": "hands"}, {"arrows": "to", "from": "enabling", "title": "dobj", "to": "multitasking"}, {"arrows": "to", "from": "enabling", "title": "prep", "to": "across"}, {"arrows": "to", "from": "ideas", "title": "prep", "to": "within"}, {"arrows": "to", "from": "lot", "title": "prep", "to": "of"}, {"arrows": "to", "from": "centers", "title": "prep", "to": "on"}, {"arrows": "to", "from": "nest", "title": "dobj", "to": "ideas"}, {"arrows": "to", "from": "ability", "title": "prep", "to": "like"}, {"arrows": "to", "from": "saw", "title": "nsubj", "to": "who"}, {"arrows": "to", "from": "saw", "title": "dobj", "to": "dog"}, {"arrows": "to", "from": "chased", "title": "nsubj", "to": "that"}, {"arrows": "to", "from": "chased", "title": "dobj", "to": "cat"}, {"arrows": "to", "from": "seems", "title": "nsubj", "to": "species"}, {"arrows": "to", "from": "do", "title": "dobj", "to": "this"}, {"arrows": "to", "from": "do", "title": "prep", "to": "by"}, {"arrows": "to", "from": "do", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "do", "title": "dobj", "to": "n\u2019t"}, {"arrows": "to", "from": "something", "title": "prep", "to": "in"}, {"arrows": "to", "from": "enabled", "title": "nsubj", "to": "something"}, {"arrows": "to", "from": "enabled", "title": "dobj", "to": "thought"}, {"arrows": "to", "from": "happened", "title": "nsubj", "to": "language"}, {"arrows": "to", "from": "be", "title": "attr", "to": "vehicle"}, {"arrows": "to", "from": "vehicle", "title": "prep", "to": "for"}, {"arrows": "to", "from": "expressing", "title": "dobj", "to": "it"}, {"arrows": "to", "from": "\u0027s", "title": "attr", "to": "evidence"}, {"arrows": "to", "from": "\u0027s", "title": "nsubj", "to": "It"}, {"arrows": "to", "from": "\u0027s", "title": "attr", "to": "behavior"}, {"arrows": "to", "from": "involved", "title": "prep", "to": "in"}, {"arrows": "to", "from": "mutated", "title": "prep", "to": "in"}, {"arrows": "to", "from": "did", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "did", "title": "dobj", "to": "n\u2019t"}, {"arrows": "to", "from": "did", "title": "prep", "to": "in"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "\u2019s", "title": "attr", "to": "gene"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "What"}, {"arrows": "to", "from": "\u2019s", "title": "attr", "to": "system"}, {"arrows": "to", "from": "appear", "title": "nsubj", "to": "Syntax"}, {"arrows": "to", "from": "appear", "title": "prep", "to": "at"}, {"arrows": "to", "from": "evolved", "title": "nsubj", "to": "They"}, {"arrows": "to", "from": "evolved", "title": "prep", "to": "from"}, {"arrows": "to", "from": "evolved", "title": "prep", "to": "with"}, {"arrows": "to", "from": "happen", "title": "nsubj", "to": "this"}, {"arrows": "to", "from": "happen", "title": "prep", "to": "in"}, {"arrows": "to", "from": "co", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "support", "title": "nsubj", "to": "languages"}, {"arrows": "to", "from": "support", "title": "dobj", "to": "theories"}, {"arrows": "to", "from": "grow", "title": "nsubj", "to": "children"}, {"arrows": "to", "from": "pidgin", "title": "dobj", "to": "language"}, {"arrows": "to", "from": "has", "title": "nsubj", "to": "brain"}, {"arrows": "to", "from": "has", "title": "dobj", "to": "kind"}, {"arrows": "to", "from": "kind", "title": "prep", "to": "of"}, {"arrows": "to", "from": "activates", "title": "nsubj", "to": "that"}, {"arrows": "to", "from": "evolve", "title": "nsubj", "to": "systems"}, {"arrows": "to", "from": "evolve", "title": "prep", "to": "into"}, {"arrows": "to", "from": "evolve", "title": "prep", "to": "over"}, {"arrows": "to", "from": "pressures", "title": "prep", "to": "like"}, {"arrows": "to", "from": "show", "title": "nsubj", "to": "simulations"}, {"arrows": "to", "from": "lead", "title": "nsubj", "to": "pressures"}, {"arrows": "to", "from": "lead", "title": "prep", "to": "to"}, {"arrows": "to", "from": "lead", "title": "prep", "to": "without"}, {"arrows": "to", "from": "emerged", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "emerged", "title": "prep", "to": "in"}, {"arrows": "to", "from": "learn", "title": "prep", "to": "about"}, {"arrows": "to", "from": "learn", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "makes", "title": "nsubj", "to": "what"}, {"arrows": "to", "from": "different", "title": "nsubj", "to": "humans"}, {"arrows": "to", "from": "different", "title": "prep", "to": "in"}, {"arrows": "to", "from": "think", "title": "nsubj", "to": "we"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"shape": "dot", "font": {"size": 14}}, "edges": {"font": {"size": 12, "align": "middle"}, "arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}}, "physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 150, "springConstant": 0.05}, "minVelocity": 0.75, "solver": "forceAtlas2Based"}};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

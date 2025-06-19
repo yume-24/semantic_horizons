@@ -1,0 +1,234 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 750px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "Visual perception", "label": "Visual perception", "shape": "dot"}, {"color": "#97c2fc", "id": "the most heavily studied areas", "label": "the most heavily studied areas", "shape": "dot"}, {"color": "#97c2fc", "id": "cognitive neuroscience", "label": "cognitive neuroscience", "shape": "dot"}, {"color": "#97c2fc", "id": "good reason", "label": "good reason", "shape": "dot"}, {"color": "#97c2fc", "id": "vision", "label": "vision", "shape": "dot"}, {"color": "#97c2fc", "id": "our sensory experience", "label": "our sensory experience", "shape": "dot"}, {"color": "#97c2fc", "id": "is", "label": "is", "shape": "dot"}, {"color": "#97c2fc", "id": "perception", "label": "perception", "shape": "dot"}, {"color": "#97c2fc", "id": "one", "label": "one", "shape": "dot"}, {"color": "#97c2fc", "id": "of", "label": "of", "shape": "dot"}, {"color": "#97c2fc", "id": "areas", "label": "areas", "shape": "dot"}, {"color": "#97c2fc", "id": "in", "label": "in", "shape": "dot"}, {"color": "#97c2fc", "id": "dominates", "label": "dominates", "shape": "dot"}, {"color": "#97c2fc", "id": "for", "label": "for", "shape": "dot"}, {"color": "#97c2fc", "id": "experience", "label": "experience", "shape": "dot"}, {"color": "#97c2fc", "id": "My research", "label": "My research", "shape": "dot"}, {"color": "#97c2fc", "id": "the neural coding", "label": "the neural coding", "shape": "dot"}, {"color": "#97c2fc", "id": "mid-level visual features", "label": "mid-level visual features", "shape": "dot"}, {"color": "#97c2fc", "id": "things", "label": "things", "shape": "dot"}, {"color": "#97c2fc", "id": "shape contours", "label": "shape contours", "shape": "dot"}, {"color": "#97c2fc", "id": "surface texture", "label": "surface texture", "shape": "dot"}, {"color": "#97c2fc", "id": "spatial frequency", "label": "spatial frequency", "shape": "dot"}, {"color": "#97c2fc", "id": "those features", "label": "those features", "shape": "dot"}, {"color": "#97c2fc", "id": "object recognition", "label": "object recognition", "shape": "dot"}, {"color": "#97c2fc", "id": "focuses", "label": "focuses", "shape": "dot"}, {"color": "#97c2fc", "id": "research", "label": "research", "shape": "dot"}, {"color": "#97c2fc", "id": "on", "label": "on", "shape": "dot"}, {"color": "#97c2fc", "id": "coding", "label": "coding", "shape": "dot"}, {"color": "#97c2fc", "id": "like", "label": "like", "shape": "dot"}, {"color": "#97c2fc", "id": "contribute", "label": "contribute", "shape": "dot"}, {"color": "#97c2fc", "id": "features", "label": "features", "shape": "dot"}, {"color": "#97c2fc", "id": "to", "label": "to", "shape": "dot"}, {"color": "#97c2fc", "id": "We", "label": "We", "shape": "dot"}, {"color": "#97c2fc", "id": "a mix", "label": "a mix", "shape": "dot"}, {"color": "#97c2fc", "id": "fMRI", "label": "fMRI", "shape": "dot"}, {"color": "#97c2fc", "id": "EEG", "label": "EEG", "shape": "dot"}, {"color": "#97c2fc", "id": "psychophysical tasks", "label": "psychophysical tasks", "shape": "dot"}, {"color": "#97c2fc", "id": "the stages", "label": "the stages", "shape": "dot"}, {"color": "#97c2fc", "id": "the visual hierarchy", "label": "the visual hierarchy", "shape": "dot"}, {"color": "#97c2fc", "id": "V1", "label": "V1", "shape": "dot"}, {"color": "#97c2fc", "id": "the inferotemporal cortex", "label": "the inferotemporal cortex", "shape": "dot"}, {"color": "#97c2fc", "id": "use", "label": "use", "shape": "dot"}, {"color": "#97c2fc", "id": "mix", "label": "mix", "shape": "dot"}, {"color": "#97c2fc", "id": "map", "label": "map", "shape": "dot"}, {"color": "#97c2fc", "id": "stages", "label": "stages", "shape": "dot"}, {"color": "#97c2fc", "id": "from", "label": "from", "shape": "dot"}, {"color": "#97c2fc", "id": "up", "label": "up", "shape": "dot"}, {"color": "#97c2fc", "id": "What", "label": "What", "shape": "dot"}, {"color": "#97c2fc", "id": "how early processing", "label": "how early processing", "shape": "dot"}, {"color": "#97c2fc", "id": "feedback loops", "label": "feedback loops", "shape": "dot"}, {"color": "#97c2fc", "id": "attention modulation", "label": "attention modulation", "shape": "dot"}, {"color": "#97c2fc", "id": "even top-down expectation", "label": "even top-down expectation", "shape": "dot"}, {"color": "#97c2fc", "id": "\u2019s", "label": "\u2019s", "shape": "dot"}, {"color": "#97c2fc", "id": "processing", "label": "processing", "shape": "dot"}, {"color": "#97c2fc", "id": "involve", "label": "involve", "shape": "dot"}, {"color": "#97c2fc", "id": "loops", "label": "loops", "shape": "dot"}, {"color": "#97c2fc", "id": "a growing interest", "label": "a growing interest", "shape": "dot"}, {"color": "#97c2fc", "id": "interest", "label": "interest", "shape": "dot"}, {"color": "#97c2fc", "id": "it", "label": "it", "shape": "dot"}, {"color": "#97c2fc", "id": "inference", "label": "inference", "shape": "dot"}, {"color": "#97c2fc", "id": "the brain", "label": "the brain", "shape": "dot"}, {"color": "#97c2fc", "id": "predictions", "label": "predictions", "shape": "dot"}, {"color": "#97c2fc", "id": "the world", "label": "the world", "shape": "dot"}, {"color": "#97c2fc", "id": "sensory input", "label": "sensory input", "shape": "dot"}, {"color": "#97c2fc", "id": "think", "label": "think", "shape": "dot"}, {"color": "#97c2fc", "id": "as", "label": "as", "shape": "dot"}, {"color": "#97c2fc", "id": "makes", "label": "makes", "shape": "dot"}, {"color": "#97c2fc", "id": "brain", "label": "brain", "shape": "dot"}, {"color": "#97c2fc", "id": "about", "label": "about", "shape": "dot"}, {"color": "#97c2fc", "id": "updates", "label": "updates", "shape": "dot"}, {"color": "#97c2fc", "id": "based", "label": "based", "shape": "dot"}, {"color": "#97c2fc", "id": "That", "label": "That", "shape": "dot"}, {"color": "#97c2fc", "id": "illusions", "label": "illusions", "shape": "dot"}, {"color": "#97c2fc", "id": "they", "label": "they", "shape": "dot"}, {"color": "#97c2fc", "id": "the assumptions", "label": "the assumptions", "shape": "dot"}, {"color": "#97c2fc", "id": "the system", "label": "the system", "shape": "dot"}, {"color": "#97c2fc", "id": "are", "label": "are", "shape": "dot"}, {"color": "#97c2fc", "id": "reveal", "label": "reveal", "shape": "dot"}, {"color": "#97c2fc", "id": "assumptions", "label": "assumptions", "shape": "dot"}, {"color": "#97c2fc", "id": "making", "label": "making", "shape": "dot"}, {"color": "#97c2fc", "id": "system", "label": "system", "shape": "dot"}, {"color": "#97c2fc", "id": "machine vision comparisons", "label": "machine vision comparisons", "shape": "dot"}, {"color": "#97c2fc", "id": "convolutional neural networks", "label": "convolutional neural networks", "shape": "dot"}, {"color": "#97c2fc", "id": "the same distorted or occluded images", "label": "the same distorted or occluded images", "shape": "dot"}, {"color": "#97c2fc", "id": "we", "label": "we", "shape": "dot"}, {"color": "#97c2fc", "id": "human participants", "label": "human participants", "shape": "dot"}, {"color": "#97c2fc", "id": "started", "label": "started", "shape": "dot"}, {"color": "#97c2fc", "id": "integrating", "label": "integrating", "shape": "dot"}, {"color": "#97c2fc", "id": "comparisons", "label": "comparisons", "shape": "dot"}, {"color": "#97c2fc", "id": "respond", "label": "respond", "shape": "dot"}, {"color": "#97c2fc", "id": "networks", "label": "networks", "shape": "dot"}, {"color": "#97c2fc", "id": "give", "label": "give", "shape": "dot"}, {"color": "#97c2fc", "id": "The parallels", "label": "The parallels", "shape": "dot"}, {"color": "#97c2fc", "id": "key differences", "label": "key differences", "shape": "dot"}, {"color": "#97c2fc", "id": "generalization", "label": "generalization", "shape": "dot"}, {"color": "#97c2fc", "id": "robustness", "label": "robustness", "shape": "dot"}, {"color": "#97c2fc", "id": "parallels", "label": "parallels", "shape": "dot"}, {"color": "#97c2fc", "id": "highlight", "label": "highlight", "shape": "dot"}, {"color": "#97c2fc", "id": "differences", "label": "differences", "shape": "dot"}, {"color": "#97c2fc", "id": "Understanding vision", "label": "Understanding vision", "shape": "dot"}, {"color": "#97c2fc", "id": "just about biology", "label": "just about biology", "shape": "dot"}, {"color": "#97c2fc", "id": "everything", "label": "everything", "shape": "dot"}, {"color": "#97c2fc", "id": "better prosthetics", "label": "better prosthetics", "shape": "dot"}, {"color": "#97c2fc", "id": "more readable user interfaces", "label": "more readable user interfaces", "shape": "dot"}, {"color": "#97c2fc", "id": "biology", "label": "biology", "shape": "dot"}, {"color": "#97c2fc", "id": "helps", "label": "helps", "shape": "dot"}, {"color": "#97c2fc", "id": "building", "label": "building", "shape": "dot"}, {"color": "#97c2fc", "id": "prosthetics", "label": "prosthetics", "shape": "dot"}, {"color": "#97c2fc", "id": "designing", "label": "designing", "shape": "dot"}, {"color": "#97c2fc", "id": "interfaces", "label": "interfaces", "shape": "dot"}, {"color": "#97c2fc", "id": "It", "label": "It", "shape": "dot"}, {"color": "#97c2fc", "id": "the rare domains", "label": "the rare domains", "shape": "dot"}, {"color": "#97c2fc", "id": "theory", "label": "theory", "shape": "dot"}, {"color": "#97c2fc", "id": "application", "label": "application", "shape": "dot"}, {"color": "#97c2fc", "id": "feed", "label": "feed", "shape": "dot"}, {"color": "#97c2fc", "id": "into", "label": "into", "shape": "dot"}, {"color": "#97c2fc", "id": "attention", "label": "attention", "shape": "dot"}, {"color": "#97c2fc", "id": "a filter", "label": "a filter", "shape": "dot"}, {"color": "#97c2fc", "id": "studying", "label": "studying", "shape": "dot"}, {"color": "#97c2fc", "id": "acts", "label": "acts", "shape": "dot"}, {"color": "#97c2fc", "id": "what", "label": "what", "shape": "dot"}, {"color": "#97c2fc", "id": "your eyes", "label": "your eyes", "shape": "dot"}, {"color": "#97c2fc", "id": "your brain", "label": "your brain", "shape": "dot"}, {"color": "#97c2fc", "id": "\u0027s", "label": "\u0027s", "shape": "dot"}, {"color": "#97c2fc", "id": "reaches", "label": "reaches", "shape": "dot"}, {"color": "#97c2fc", "id": "eyes", "label": "eyes", "shape": "dot"}, {"color": "#97c2fc", "id": "process", "label": "process", "shape": "dot"}, {"color": "#97c2fc", "id": "decides", "label": "decides", "shape": "dot"}, {"color": "#97c2fc", "id": "Selective attention", "label": "Selective attention", "shape": "dot"}, {"color": "#97c2fc", "id": "neural responses", "label": "neural responses", "shape": "dot"}, {"color": "#97c2fc", "id": "V2", "label": "V2", "shape": "dot"}, {"color": "#97c2fc", "id": "V4", "label": "V4", "shape": "dot"}, {"color": "#97c2fc", "id": "the visual stream", "label": "the visual stream", "shape": "dot"}, {"color": "#97c2fc", "id": "modulate", "label": "modulate", "shape": "dot"}, {"color": "#97c2fc", "id": "responses", "label": "responses", "shape": "dot"}, {"color": "#97c2fc", "id": "early", "label": "early", "shape": "dot"}, {"color": "#97c2fc", "id": "Some", "label": "Some", "shape": "dot"}, {"color": "#97c2fc", "id": "the most exciting work", "label": "the most exciting work", "shape": "dot"}, {"color": "#97c2fc", "id": "the intersection", "label": "the intersection", "shape": "dot"}, {"color": "#97c2fc", "id": "action", "label": "action", "shape": "dot"}, {"color": "#97c2fc", "id": "motor planning", "label": "motor planning", "shape": "dot"}, {"color": "#97c2fc", "id": "happening", "label": "happening", "shape": "dot"}, {"color": "#97c2fc", "id": "at", "label": "at", "shape": "dot"}, {"color": "#97c2fc", "id": "intersection", "label": "intersection", "shape": "dot"}, {"color": "#97c2fc", "id": "guides", "label": "guides", "shape": "dot"}, {"color": "#97c2fc", "id": "planning", "label": "planning", "shape": "dot"}, {"color": "#97c2fc", "id": "This", "label": "This", "shape": "dot"}, {"color": "#97c2fc", "id": "implications", "label": "implications", "shape": "dot"}, {"color": "#97c2fc", "id": "robotics", "label": "robotics", "shape": "dot"}, {"color": "#97c2fc", "id": "has", "label": "has", "shape": "dot"}, {"color": "#97c2fc", "id": "individual differences", "label": "individual differences", "shape": "dot"}, {"color": "#97c2fc", "id": "\u2019re", "label": "\u2019re", "shape": "dot"}, {"color": "#97c2fc", "id": "interested", "label": "interested", "shape": "dot"}, {"color": "#97c2fc", "id": "some people", "label": "some people", "shape": "dot"}, {"color": "#97c2fc", "id": "fine-grained visual detail", "label": "fine-grained visual detail", "shape": "dot"}, {"color": "#97c2fc", "id": "others", "label": "others", "shape": "dot"}, {"color": "#97c2fc", "id": "notice", "label": "notice", "shape": "dot"}, {"color": "#97c2fc", "id": "people", "label": "people", "shape": "dot"}, {"color": "#97c2fc", "id": "detail", "label": "detail", "shape": "dot"}, {"color": "#97c2fc", "id": "miss", "label": "miss", "shape": "dot"}, {"color": "#97c2fc", "id": "training", "label": "training", "shape": "dot"}, {"color": "#97c2fc", "id": "genetics", "label": "genetics", "shape": "dot"}, {"color": "#97c2fc", "id": "something", "label": "something", "shape": "dot"}, {"color": "#97c2fc", "id": "Is", "label": "Is", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "is", "title": "nsubj", "to": "perception"}, {"arrows": "to", "from": "is", "title": "attr", "to": "one"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "processing"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "vision"}, {"arrows": "to", "from": "is", "title": "attr", "to": "biology"}, {"arrows": "to", "from": "one", "title": "prep", "to": "of"}, {"arrows": "to", "from": "areas", "title": "prep", "to": "in"}, {"arrows": "to", "from": "dominates", "title": "prep", "to": "for"}, {"arrows": "to", "from": "dominates", "title": "nsubj", "to": "vision"}, {"arrows": "to", "from": "dominates", "title": "dobj", "to": "experience"}, {"arrows": "to", "from": "things", "title": "prep", "to": "like"}, {"arrows": "to", "from": "focuses", "title": "nsubj", "to": "research"}, {"arrows": "to", "from": "focuses", "title": "prep", "to": "on"}, {"arrows": "to", "from": "coding", "title": "prep", "to": "of"}, {"arrows": "to", "from": "contribute", "title": "nsubj", "to": "features"}, {"arrows": "to", "from": "contribute", "title": "prep", "to": "to"}, {"arrows": "to", "from": "use", "title": "nsubj", "to": "We"}, {"arrows": "to", "from": "use", "title": "dobj", "to": "mix"}, {"arrows": "to", "from": "mix", "title": "prep", "to": "of"}, {"arrows": "to", "from": "map", "title": "dobj", "to": "stages"}, {"arrows": "to", "from": "map", "title": "prep", "to": "from"}, {"arrows": "to", "from": "map", "title": "prep", "to": "up"}, {"arrows": "to", "from": "stages", "title": "prep", "to": "of"}, {"arrows": "to", "from": "up", "title": "prep", "to": "to"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "What"}, {"arrows": "to", "from": "\u2019s", "title": "attr", "to": "interest"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "That"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "It"}, {"arrows": "to", "from": "\u2019s", "title": "attr", "to": "one"}, {"arrows": "to", "from": "involve", "title": "nsubj", "to": "stages"}, {"arrows": "to", "from": "involve", "title": "dobj", "to": "loops"}, {"arrows": "to", "from": "interest", "title": "prep", "to": "in"}, {"arrows": "to", "from": "predictions", "title": "prep", "to": "about"}, {"arrows": "to", "from": "think", "title": "nsubj", "to": "We"}, {"arrows": "to", "from": "think", "title": "prep", "to": "of"}, {"arrows": "to", "from": "think", "title": "prep", "to": "as"}, {"arrows": "to", "from": "makes", "title": "nsubj", "to": "brain"}, {"arrows": "to", "from": "makes", "title": "dobj", "to": "predictions"}, {"arrows": "to", "from": "updates", "title": "prep", "to": "based"}, {"arrows": "to", "from": "based", "title": "prep", "to": "on"}, {"arrows": "to", "from": "are", "title": "nsubj", "to": "illusions"}, {"arrows": "to", "from": "are", "title": "nsubj", "to": "parallels"}, {"arrows": "to", "from": "are", "title": "nsubj", "to": "loops"}, {"arrows": "to", "from": "reveal", "title": "nsubj", "to": "they"}, {"arrows": "to", "from": "reveal", "title": "dobj", "to": "assumptions"}, {"arrows": "to", "from": "making", "title": "nsubj", "to": "system"}, {"arrows": "to", "from": "started", "title": "nsubj", "to": "We"}, {"arrows": "to", "from": "integrating", "title": "dobj", "to": "comparisons"}, {"arrows": "to", "from": "integrating", "title": "prep", "to": "like"}, {"arrows": "to", "from": "respond", "title": "nsubj", "to": "networks"}, {"arrows": "to", "from": "respond", "title": "prep", "to": "to"}, {"arrows": "to", "from": "give", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "highlight", "title": "dobj", "to": "differences"}, {"arrows": "to", "from": "differences", "title": "prep", "to": "in"}, {"arrows": "to", "from": "everything", "title": "prep", "to": "from"}, {"arrows": "to", "from": "helps", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "helps", "title": "prep", "to": "in"}, {"arrows": "to", "from": "building", "title": "dobj", "to": "prosthetics"}, {"arrows": "to", "from": "building", "title": "prep", "to": "to"}, {"arrows": "to", "from": "designing", "title": "dobj", "to": "interfaces"}, {"arrows": "to", "from": "feed", "title": "nsubj", "to": "theory"}, {"arrows": "to", "from": "feed", "title": "prep", "to": "into"}, {"arrows": "to", "from": "studying", "title": "nsubj", "to": "We"}, {"arrows": "to", "from": "acts", "title": "nsubj", "to": "attention"}, {"arrows": "to", "from": "acts", "title": "prep", "to": "as"}, {"arrows": "to", "from": "\u0027s", "title": "nsubj", "to": "It"}, {"arrows": "to", "from": "\u0027s", "title": "prep", "to": "about"}, {"arrows": "to", "from": "reaches", "title": "nsubj", "to": "what"}, {"arrows": "to", "from": "reaches", "title": "dobj", "to": "eyes"}, {"arrows": "to", "from": "process", "title": "dobj", "to": "what"}, {"arrows": "to", "from": "decides", "title": "nsubj", "to": "brain"}, {"arrows": "to", "from": "modulate", "title": "nsubj", "to": "attention"}, {"arrows": "to", "from": "modulate", "title": "dobj", "to": "responses"}, {"arrows": "to", "from": "modulate", "title": "prep", "to": "in"}, {"arrows": "to", "from": "early", "title": "prep", "to": "as"}, {"arrows": "to", "from": "Some", "title": "prep", "to": "of"}, {"arrows": "to", "from": "happening", "title": "nsubj", "to": "Some"}, {"arrows": "to", "from": "happening", "title": "prep", "to": "at"}, {"arrows": "to", "from": "intersection", "title": "prep", "to": "of"}, {"arrows": "to", "from": "guides", "title": "nsubj", "to": "vision"}, {"arrows": "to", "from": "guides", "title": "dobj", "to": "planning"}, {"arrows": "to", "from": "implications", "title": "prep", "to": "for"}, {"arrows": "to", "from": "has", "title": "nsubj", "to": "This"}, {"arrows": "to", "from": "has", "title": "dobj", "to": "implications"}, {"arrows": "to", "from": "\u2019re", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "interested", "title": "prep", "to": "in"}, {"arrows": "to", "from": "notice", "title": "nsubj", "to": "people"}, {"arrows": "to", "from": "notice", "title": "dobj", "to": "detail"}, {"arrows": "to", "from": "miss", "title": "nsubj", "to": "others"}, {"arrows": "to", "from": "miss", "title": "dobj", "to": "it"}, {"arrows": "to", "from": "Is", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "Is", "title": "attr", "to": "training"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"shape": "dot", "font": {"size": 14}}, "edges": {"font": {"size": 12, "align": "middle"}, "arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}}, "physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 150, "springConstant": 0.05}, "minVelocity": 0.75, "solver": "forceAtlas2Based"}};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

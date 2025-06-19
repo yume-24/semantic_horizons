@@ -1,0 +1,139 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "Memory", "label": "Memory", "shape": "dot"}, {"color": "#97c2fc", "id": "something", "label": "something", "shape": "dot"}, {"color": "#97c2fc", "id": "I", "label": "I", "shape": "dot"}, {"color": "#97c2fc", "id": "all the time", "label": "all the time", "shape": "dot"}, {"color": "#97c2fc", "id": "my keys", "label": "my keys", "shape": "dot"}, {"color": "#97c2fc", "id": "a room", "label": "a room", "shape": "dot"}, {"color": "#97c2fc", "id": "is", "label": "is", "shape": "dot"}, {"color": "#97c2fc", "id": "think", "label": "think", "shape": "dot"}, {"color": "#97c2fc", "id": "about", "label": "about", "shape": "dot"}, {"color": "#97c2fc", "id": "forget", "label": "forget", "shape": "dot"}, {"color": "#97c2fc", "id": "put", "label": "put", "shape": "dot"}, {"color": "#97c2fc", "id": "keys", "label": "keys", "shape": "dot"}, {"color": "#97c2fc", "id": "walked", "label": "walked", "shape": "dot"}, {"color": "#97c2fc", "id": "into", "label": "into", "shape": "dot"}, {"color": "#97c2fc", "id": "some memories", "label": "some memories", "shape": "dot"}, {"color": "#97c2fc", "id": "a really emotional moment", "label": "a really emotional moment", "shape": "dot"}, {"color": "#97c2fc", "id": "others", "label": "others", "shape": "dot"}, {"color": "#97c2fc", "id": "stick", "label": "stick", "shape": "dot"}, {"color": "#97c2fc", "id": "memories", "label": "memories", "shape": "dot"}, {"color": "#97c2fc", "id": "like", "label": "like", "shape": "dot"}, {"color": "#97c2fc", "id": "disappear", "label": "disappear", "shape": "dot"}, {"color": "#97c2fc", "id": "school", "label": "school", "shape": "dot"}, {"color": "#97c2fc", "id": "short-term and long-term memory", "label": "short-term and long-term memory", "shape": "dot"}, {"color": "#97c2fc", "id": "working memory", "label": "working memory", "shape": "dot"}, {"color": "#97c2fc", "id": "remember", "label": "remember", "shape": "dot"}, {"color": "#97c2fc", "id": "learning", "label": "learning", "shape": "dot"}, {"color": "#97c2fc", "id": "in", "label": "in", "shape": "dot"}, {"color": "#97c2fc", "id": "called", "label": "called", "shape": "dot"}, {"color": "#97c2fc", "id": "what", "label": "what", "shape": "dot"}, {"color": "#97c2fc", "id": "them", "label": "them", "shape": "dot"}, {"color": "#97c2fc", "id": "understand", "label": "understand", "shape": "dot"}, {"color": "#97c2fc", "id": "separates", "label": "separates", "shape": "dot"}, {"color": "#97c2fc", "id": "a phone number", "label": "a phone number", "shape": "dot"}, {"color": "#97c2fc", "id": "a minute", "label": "a minute", "shape": "dot"}, {"color": "#97c2fc", "id": "that", "label": "that", "shape": "dot"}, {"color": "#97c2fc", "id": "memorize", "label": "memorize", "shape": "dot"}, {"color": "#97c2fc", "id": "number", "label": "number", "shape": "dot"}, {"color": "#97c2fc", "id": "for", "label": "for", "shape": "dot"}, {"color": "#97c2fc", "id": "that sleep", "label": "that sleep", "shape": "dot"}, {"color": "#97c2fc", "id": "memory", "label": "memory", "shape": "dot"}, {"color": "#97c2fc", "id": "heard", "label": "heard", "shape": "dot"}, {"color": "#97c2fc", "id": "helps", "label": "helps", "shape": "dot"}, {"color": "#97c2fc", "id": "sleep", "label": "sleep", "shape": "dot"}, {"color": "#97c2fc", "id": "with", "label": "with", "shape": "dot"}, {"color": "#97c2fc", "id": "That", "label": "That", "shape": "dot"}, {"color": "#97c2fc", "id": "people", "label": "people", "shape": "dot"}, {"color": "#97c2fc", "id": "it", "label": "it", "shape": "dot"}, {"color": "#97c2fc", "id": "bed", "label": "bed", "shape": "dot"}, {"color": "#97c2fc", "id": "\u2019s", "label": "\u2019s", "shape": "dot"}, {"color": "#97c2fc", "id": "say", "label": "say", "shape": "dot"}, {"color": "#97c2fc", "id": "study", "label": "study", "shape": "dot"}, {"color": "#97c2fc", "id": "before", "label": "before", "shape": "dot"}, {"color": "#97c2fc", "id": "me", "label": "me", "shape": "dot"}, {"color": "#97c2fc", "id": "things", "label": "things", "shape": "dot"}, {"color": "#97c2fc", "id": "review", "label": "review", "shape": "dot"}, {"color": "#97c2fc", "id": "fall", "label": "fall", "shape": "dot"}, {"color": "#97c2fc", "id": "One thing", "label": "One thing", "shape": "dot"}, {"color": "#97c2fc", "id": "thing", "label": "thing", "shape": "dot"}, {"color": "#97c2fc", "id": "freaks", "label": "freaks", "shape": "dot"}, {"color": "#97c2fc", "id": "moments", "label": "moments", "shape": "dot"}, {"color": "#97c2fc", "id": "someone", "label": "someone", "shape": "dot"}, {"color": "#97c2fc", "id": "a picture", "label": "a picture", "shape": "dot"}, {"color": "#97c2fc", "id": "video", "label": "video", "shape": "dot"}, {"color": "#97c2fc", "id": "had", "label": "had", "shape": "dot"}, {"color": "#97c2fc", "id": "swear", "label": "swear", "shape": "dot"}, {"color": "#97c2fc", "id": "happened", "label": "happened", "shape": "dot"}, {"color": "#97c2fc", "id": "shows", "label": "shows", "shape": "dot"}, {"color": "#97c2fc", "id": "picture", "label": "picture", "shape": "dot"}, {"color": "#97c2fc", "id": "proves", "label": "proves", "shape": "dot"}, {"color": "#97c2fc", "id": "It", "label": "It", "shape": "dot"}, {"color": "#97c2fc", "id": "makes", "label": "makes", "shape": "dot"}, {"color": "#97c2fc", "id": "wonder", "label": "wonder", "shape": "dot"}, {"color": "#97c2fc", "id": "much", "label": "much", "shape": "dot"}, {"color": "#97c2fc", "id": "of", "label": "of", "shape": "dot"}, {"color": "#97c2fc", "id": "the brain", "label": "the brain", "shape": "dot"}, {"color": "#97c2fc", "id": "love", "label": "love", "shape": "dot"}, {"color": "#97c2fc", "id": "more", "label": "more", "shape": "dot"}, {"color": "#97c2fc", "id": "works", "label": "works", "shape": "dot"}, {"color": "#97c2fc", "id": "the hippocampus", "label": "the hippocampus", "shape": "dot"}, {"color": "#97c2fc", "id": "no idea", "label": "no idea", "shape": "dot"}, {"color": "#97c2fc", "id": "know", "label": "know", "shape": "dot"}, {"color": "#97c2fc", "id": "hippocampus", "label": "hippocampus", "shape": "dot"}, {"color": "#97c2fc", "id": "have", "label": "have", "shape": "dot"}, {"color": "#97c2fc", "id": "idea", "label": "idea", "shape": "dot"}, {"color": "#97c2fc", "id": "does", "label": "does", "shape": "dot"}, {"color": "#97c2fc", "id": "help", "label": "help", "shape": "dot"}, {"color": "#97c2fc", "id": "mindful", "label": "mindful", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "is", "title": "nsubj", "to": "Memory"}, {"arrows": "to", "from": "is", "title": "attr", "to": "something"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "thing"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "hippocampus"}, {"arrows": "to", "from": "think", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "think", "title": "prep", "to": "about"}, {"arrows": "to", "from": "forget", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "put", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "put", "title": "dobj", "to": "keys"}, {"arrows": "to", "from": "walked", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "walked", "title": "prep", "to": "into"}, {"arrows": "to", "from": "stick", "title": "nsubj", "to": "memories"}, {"arrows": "to", "from": "stick", "title": "prep", "to": "like"}, {"arrows": "to", "from": "disappear", "title": "nsubj", "to": "others"}, {"arrows": "to", "from": "remember", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "remember", "title": "dobj", "to": "things"}, {"arrows": "to", "from": "remember", "title": "dobj", "to": "what"}, {"arrows": "to", "from": "learning", "title": "prep", "to": "in"}, {"arrows": "to", "from": "learning", "title": "prep", "to": "about"}, {"arrows": "to", "from": "called", "title": "nsubj", "to": "something"}, {"arrows": "to", "from": "understand", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "understand", "title": "dobj", "to": "more"}, {"arrows": "to", "from": "separates", "title": "nsubj", "to": "what"}, {"arrows": "to", "from": "separates", "title": "dobj", "to": "them"}, {"arrows": "to", "from": "memorize", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "memorize", "title": "dobj", "to": "number"}, {"arrows": "to", "from": "memorize", "title": "prep", "to": "for"}, {"arrows": "to", "from": "heard", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "helps", "title": "nsubj", "to": "sleep"}, {"arrows": "to", "from": "helps", "title": "prep", "to": "with"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "That"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "that"}, {"arrows": "to", "from": "\u2019s", "title": "prep", "to": "for"}, {"arrows": "to", "from": "say", "title": "nsubj", "to": "people"}, {"arrows": "to", "from": "study", "title": "prep", "to": "before"}, {"arrows": "to", "from": "review", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "review", "title": "dobj", "to": "them"}, {"arrows": "to", "from": "fall", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "freaks", "title": "nsubj", "to": "that"}, {"arrows": "to", "from": "freaks", "title": "dobj", "to": "me"}, {"arrows": "to", "from": "had", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "had", "title": "dobj", "to": "moments"}, {"arrows": "to", "from": "swear", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "happened", "title": "nsubj", "to": "something"}, {"arrows": "to", "from": "shows", "title": "nsubj", "to": "someone"}, {"arrows": "to", "from": "shows", "title": "dobj", "to": "picture"}, {"arrows": "to", "from": "proves", "title": "nsubj", "to": "that"}, {"arrows": "to", "from": "makes", "title": "nsubj", "to": "It"}, {"arrows": "to", "from": "wonder", "title": "nsubj", "to": "me"}, {"arrows": "to", "from": "much", "title": "prep", "to": "of"}, {"arrows": "to", "from": "love", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "more", "title": "prep", "to": "about"}, {"arrows": "to", "from": "works", "title": "nsubj", "to": "memory"}, {"arrows": "to", "from": "works", "title": "prep", "to": "in"}, {"arrows": "to", "from": "know", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "have", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "have", "title": "dobj", "to": "idea"}, {"arrows": "to", "from": "does", "title": "dobj", "to": "what"}, {"arrows": "to", "from": "does", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "help", "title": "dobj", "to": "me"}, {"arrows": "to", "from": "help", "title": "prep", "to": "with"}, {"arrows": "to", "from": "mindful", "title": "prep", "to": "in"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"shape": "dot", "font": {"size": 14}}, "edges": {"font": {"size": 12, "align": "middle"}, "arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}}, "physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 150, "springConstant": 0.05}, "minVelocity": 0.75, "solver": "forceAtlas2Based"}};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

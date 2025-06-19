@@ -1,0 +1,234 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 750px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "Memory", "label": "Memory", "shape": "dot"}, {"color": "#97c2fc", "id": "just the storage", "label": "just the storage", "shape": "dot"}, {"color": "#97c2fc", "id": "facts", "label": "facts", "shape": "dot"}, {"color": "#97c2fc", "id": "it", "label": "it", "shape": "dot"}, {"color": "#97c2fc", "id": "a dynamic process", "label": "a dynamic process", "shape": "dot"}, {"color": "#97c2fc", "id": "encoding", "label": "encoding", "shape": "dot"}, {"color": "#97c2fc", "id": "consolidation", "label": "consolidation", "shape": "dot"}, {"color": "#97c2fc", "id": "retrieval", "label": "retrieval", "shape": "dot"}, {"color": "#97c2fc", "id": "reconsolidation", "label": "reconsolidation", "shape": "dot"}, {"color": "#97c2fc", "id": "is", "label": "is", "shape": "dot"}, {"color": "#97c2fc", "id": "storage", "label": "storage", "shape": "dot"}, {"color": "#97c2fc", "id": "of", "label": "of", "shape": "dot"}, {"color": "#97c2fc", "id": "\u2019s", "label": "\u2019s", "shape": "dot"}, {"color": "#97c2fc", "id": "process", "label": "process", "shape": "dot"}, {"color": "#97c2fc", "id": "involving", "label": "involving", "shape": "dot"}, {"color": "#97c2fc", "id": "My research", "label": "My research", "shape": "dot"}, {"color": "#97c2fc", "id": "how episodic memories", "label": "how episodic memories", "shape": "dot"}, {"color": "#97c2fc", "id": "time", "label": "time", "shape": "dot"}, {"color": "#97c2fc", "id": "sleep", "label": "sleep", "shape": "dot"}, {"color": "#97c2fc", "id": "focuses", "label": "focuses", "shape": "dot"}, {"color": "#97c2fc", "id": "research", "label": "research", "shape": "dot"}, {"color": "#97c2fc", "id": "on", "label": "on", "shape": "dot"}, {"color": "#97c2fc", "id": "stabilized", "label": "stabilized", "shape": "dot"}, {"color": "#97c2fc", "id": "over", "label": "over", "shape": "dot"}, {"color": "#97c2fc", "id": "during", "label": "during", "shape": "dot"}, {"color": "#97c2fc", "id": "We", "label": "We", "shape": "dot"}, {"color": "#97c2fc", "id": "polysomnography", "label": "polysomnography", "shape": "dot"}, {"color": "#97c2fc", "id": "fMRI", "label": "fMRI", "shape": "dot"}, {"color": "#97c2fc", "id": "how neural activity", "label": "how neural activity", "shape": "dot"}, {"color": "#97c2fc", "id": "memory consolidation", "label": "memory consolidation", "shape": "dot"}, {"color": "#97c2fc", "id": "use", "label": "use", "shape": "dot"}, {"color": "#97c2fc", "id": "affects", "label": "affects", "shape": "dot"}, {"color": "#97c2fc", "id": "activity", "label": "activity", "shape": "dot"}, {"color": "#97c2fc", "id": "One thing", "label": "One thing", "shape": "dot"}, {"color": "#97c2fc", "id": "we", "label": "we", "shape": "dot"}, {"color": "#97c2fc", "id": "that slow-wave sleep", "label": "that slow-wave sleep", "shape": "dot"}, {"color": "#97c2fc", "id": "the first half", "label": "the first half", "shape": "dot"}, {"color": "#97c2fc", "id": "the night", "label": "the night", "shape": "dot"}, {"color": "#97c2fc", "id": "declarative memory consolidation", "label": "declarative memory consolidation", "shape": "dot"}, {"color": "#97c2fc", "id": "thing", "label": "thing", "shape": "dot"}, {"color": "#97c2fc", "id": "discovered", "label": "discovered", "shape": "dot"}, {"color": "#97c2fc", "id": "in", "label": "in", "shape": "dot"}, {"color": "#97c2fc", "id": "half", "label": "half", "shape": "dot"}, {"color": "#97c2fc", "id": "critical", "label": "critical", "shape": "dot"}, {"color": "#97c2fc", "id": "for", "label": "for", "shape": "dot"}, {"color": "#97c2fc", "id": "the hippocampus", "label": "the hippocampus", "shape": "dot"}, {"color": "#97c2fc", "id": "a central role", "label": "a central role", "shape": "dot"}, {"color": "#97c2fc", "id": "that", "label": "that", "shape": "dot"}, {"color": "#97c2fc", "id": "plays", "label": "plays", "shape": "dot"}, {"color": "#97c2fc", "id": "hippocampus", "label": "hippocampus", "shape": "dot"}, {"color": "#97c2fc", "id": "role", "label": "role", "shape": "dot"}, {"color": "#97c2fc", "id": "What", "label": "What", "shape": "dot"}, {"color": "#97c2fc", "id": "memory reactivation", "label": "memory reactivation", "shape": "dot"}, {"color": "#97c2fc", "id": "techniques", "label": "techniques", "shape": "dot"}, {"color": "#97c2fc", "id": "targeted memory reactivation", "label": "targeted memory reactivation", "shape": "dot"}, {"color": "#97c2fc", "id": "memories", "label": "memories", "shape": "dot"}, {"color": "#97c2fc", "id": "recall", "label": "recall", "shape": "dot"}, {"color": "#97c2fc", "id": "detected", "label": "detected", "shape": "dot"}, {"color": "#97c2fc", "id": "cue", "label": "cue", "shape": "dot"}, {"color": "#97c2fc", "id": "through", "label": "through", "shape": "dot"}, {"color": "#97c2fc", "id": "like", "label": "like", "shape": "dot"}, {"color": "#97c2fc", "id": "improve", "label": "improve", "shape": "dot"}, {"color": "#97c2fc", "id": "memory", "label": "memory", "shape": "dot"}, {"color": "#97c2fc", "id": "studying", "label": "studying", "shape": "dot"}, {"color": "#97c2fc", "id": "People", "label": "People", "shape": "dot"}, {"color": "#97c2fc", "id": "a hard drive", "label": "a hard drive", "shape": "dot"}, {"color": "#97c2fc", "id": "blending", "label": "blending", "shape": "dot"}, {"color": "#97c2fc", "id": "distortion", "label": "distortion", "shape": "dot"}, {"color": "#97c2fc", "id": "inference", "label": "inference", "shape": "dot"}, {"color": "#97c2fc", "id": "think", "label": "think", "shape": "dot"}, {"color": "#97c2fc", "id": "prone", "label": "prone", "shape": "dot"}, {"color": "#97c2fc", "id": "to", "label": "to", "shape": "dot"}, {"color": "#97c2fc", "id": "That", "label": "That", "shape": "dot"}, {"color": "#97c2fc", "id": "eyewitness testimony", "label": "eyewitness testimony", "shape": "dot"}, {"color": "#97c2fc", "id": "be", "label": "be", "shape": "dot"}, {"color": "#97c2fc", "id": "testimony", "label": "testimony", "shape": "dot"}, {"color": "#97c2fc", "id": "people", "label": "people", "shape": "dot"}, {"color": "#97c2fc", "id": "things", "label": "things", "shape": "dot"}, {"color": "#97c2fc", "id": "remember", "label": "remember", "shape": "dot"}, {"color": "#97c2fc", "id": "happened", "label": "happened", "shape": "dot"}, {"color": "#97c2fc", "id": "clinical work", "label": "clinical work", "shape": "dot"}, {"color": "#97c2fc", "id": "memory impairments", "label": "memory impairments", "shape": "dot"}, {"color": "#97c2fc", "id": "the earliest signs", "label": "the earliest signs", "shape": "dot"}, {"color": "#97c2fc", "id": "neurodegenerative diseases", "label": "neurodegenerative diseases", "shape": "dot"}, {"color": "#97c2fc", "id": "Alzheimer", "label": "Alzheimer", "shape": "dot"}, {"color": "#97c2fc", "id": "see", "label": "see", "shape": "dot"}, {"color": "#97c2fc", "id": "In", "label": "In", "shape": "dot"}, {"color": "#97c2fc", "id": "are", "label": "are", "shape": "dot"}, {"color": "#97c2fc", "id": "impairments", "label": "impairments", "shape": "dot"}, {"color": "#97c2fc", "id": "among", "label": "among", "shape": "dot"}, {"color": "#97c2fc", "id": "signs", "label": "signs", "shape": "dot"}, {"color": "#97c2fc", "id": "diseases", "label": "diseases", "shape": "dot"}, {"color": "#97c2fc", "id": "that emotional memories", "label": "that emotional memories", "shape": "dot"}, {"color": "#97c2fc", "id": "healthy individuals", "label": "healthy individuals", "shape": "dot"}, {"color": "#97c2fc", "id": "finding", "label": "finding", "shape": "dot"}, {"color": "#97c2fc", "id": "The amygdala", "label": "The amygdala", "shape": "dot"}, {"color": "#97c2fc", "id": "those memories", "label": "those memories", "shape": "dot"}, {"color": "#97c2fc", "id": "they", "label": "they", "shape": "dot"}, {"color": "#97c2fc", "id": "seems", "label": "seems", "shape": "dot"}, {"color": "#97c2fc", "id": "amygdala", "label": "amygdala", "shape": "dot"}, {"color": "#97c2fc", "id": "tag", "label": "tag", "shape": "dot"}, {"color": "#97c2fc", "id": "as", "label": "as", "shape": "dot"}, {"color": "#97c2fc", "id": "just about the past", "label": "just about the past", "shape": "dot"}, {"color": "#97c2fc", "id": "the future", "label": "the future", "shape": "dot"}, {"color": "#97c2fc", "id": "study", "label": "study", "shape": "dot"}, {"color": "#97c2fc", "id": "realize", "label": "realize", "shape": "dot"}, {"color": "#97c2fc", "id": "past", "label": "past", "shape": "dot"}, {"color": "#97c2fc", "id": "about", "label": "about", "shape": "dot"}, {"color": "#97c2fc", "id": "Episodic memory", "label": "Episodic memory", "shape": "dot"}, {"color": "#97c2fc", "id": "us", "label": "us", "shape": "dot"}, {"color": "#97c2fc", "id": "possible futures", "label": "possible futures", "shape": "dot"}, {"color": "#97c2fc", "id": "outcomes", "label": "outcomes", "shape": "dot"}, {"color": "#97c2fc", "id": "decisions", "label": "decisions", "shape": "dot"}, {"color": "#97c2fc", "id": "helps", "label": "helps", "shape": "dot"}, {"color": "#97c2fc", "id": "simulate", "label": "simulate", "shape": "dot"}, {"color": "#97c2fc", "id": "futures", "label": "futures", "shape": "dot"}, {"color": "#97c2fc", "id": "evaluate", "label": "evaluate", "shape": "dot"}, {"color": "#97c2fc", "id": "make", "label": "make", "shape": "dot"}, {"color": "#97c2fc", "id": "that sense", "label": "that sense", "shape": "dot"}, {"color": "#97c2fc", "id": "two sides", "label": "two sides", "shape": "dot"}, {"color": "#97c2fc", "id": "the same coin", "label": "the same coin", "shape": "dot"}, {"color": "#97c2fc", "id": "sides", "label": "sides", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "is", "title": "nsubj", "to": "Memory"}, {"arrows": "to", "from": "is", "title": "attr", "to": "storage"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "thing"}, {"arrows": "to", "from": "is", "title": "attr", "to": "sleep"}, {"arrows": "to", "from": "is", "title": "prep", "to": "in"}, {"arrows": "to", "from": "is", "title": "nsubj", "to": "memory"}, {"arrows": "to", "from": "storage", "title": "prep", "to": "of"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "\u2019s", "title": "attr", "to": "process"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "What"}, {"arrows": "to", "from": "\u2019s", "title": "prep", "to": "like"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "That"}, {"arrows": "to", "from": "\u2019s", "title": "attr", "to": "past"}, {"arrows": "to", "from": "\u2019s", "title": "prep", "to": "about"}, {"arrows": "to", "from": "involving", "title": "dobj", "to": "encoding"}, {"arrows": "to", "from": "focuses", "title": "nsubj", "to": "research"}, {"arrows": "to", "from": "focuses", "title": "prep", "to": "on"}, {"arrows": "to", "from": "stabilized", "title": "prep", "to": "over"}, {"arrows": "to", "from": "stabilized", "title": "prep", "to": "during"}, {"arrows": "to", "from": "use", "title": "nsubj", "to": "We"}, {"arrows": "to", "from": "use", "title": "dobj", "to": "polysomnography"}, {"arrows": "to", "from": "affects", "title": "nsubj", "to": "activity"}, {"arrows": "to", "from": "affects", "title": "dobj", "to": "consolidation"}, {"arrows": "to", "from": "activity", "title": "prep", "to": "during"}, {"arrows": "to", "from": "discovered", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "half", "title": "prep", "to": "of"}, {"arrows": "to", "from": "critical", "title": "prep", "to": "for"}, {"arrows": "to", "from": "plays", "title": "nsubj", "to": "hippocampus"}, {"arrows": "to", "from": "plays", "title": "dobj", "to": "role"}, {"arrows": "to", "from": "plays", "title": "prep", "to": "in"}, {"arrows": "to", "from": "techniques", "title": "prep", "to": "like"}, {"arrows": "to", "from": "detected", "title": "prep", "to": "in"}, {"arrows": "to", "from": "cue", "title": "prep", "to": "through"}, {"arrows": "to", "from": "cue", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "cue", "title": "dobj", "to": "memories"}, {"arrows": "to", "from": "cue", "title": "prep", "to": "during"}, {"arrows": "to", "from": "improve", "title": "dobj", "to": "recall"}, {"arrows": "to", "from": "studying", "title": "nsubj", "to": "We"}, {"arrows": "to", "from": "think", "title": "nsubj", "to": "People"}, {"arrows": "to", "from": "think", "title": "prep", "to": "of"}, {"arrows": "to", "from": "think", "title": "prep", "to": "like"}, {"arrows": "to", "from": "prone", "title": "prep", "to": "to"}, {"arrows": "to", "from": "be", "title": "nsubj", "to": "testimony"}, {"arrows": "to", "from": "remember", "title": "nsubj", "to": "people"}, {"arrows": "to", "from": "remember", "title": "dobj", "to": "things"}, {"arrows": "to", "from": "happened", "title": "nsubj", "to": "that"}, {"arrows": "to", "from": "see", "title": "prep", "to": "In"}, {"arrows": "to", "from": "see", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "are", "title": "nsubj", "to": "impairments"}, {"arrows": "to", "from": "are", "title": "prep", "to": "among"}, {"arrows": "to", "from": "are", "title": "prep", "to": "In"}, {"arrows": "to", "from": "are", "title": "attr", "to": "sides"}, {"arrows": "to", "from": "signs", "title": "prep", "to": "of"}, {"arrows": "to", "from": "diseases", "title": "prep", "to": "like"}, {"arrows": "to", "from": "finding", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "finding", "title": "dobj", "to": "memories"}, {"arrows": "to", "from": "finding", "title": "prep", "to": "in"}, {"arrows": "to", "from": "seems", "title": "nsubj", "to": "amygdala"}, {"arrows": "to", "from": "tag", "title": "dobj", "to": "memories"}, {"arrows": "to", "from": "tag", "title": "prep", "to": "as"}, {"arrows": "to", "from": "study", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "study", "title": "dobj", "to": "memory"}, {"arrows": "to", "from": "realize", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "helps", "title": "nsubj", "to": "memory"}, {"arrows": "to", "from": "simulate", "title": "nsubj", "to": "us"}, {"arrows": "to", "from": "simulate", "title": "dobj", "to": "futures"}, {"arrows": "to", "from": "evaluate", "title": "dobj", "to": "outcomes"}, {"arrows": "to", "from": "make", "title": "dobj", "to": "decisions"}, {"arrows": "to", "from": "sides", "title": "prep", "to": "of"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"shape": "dot", "font": {"size": 14}}, "edges": {"font": {"size": 12, "align": "middle"}, "arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}}, "physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 150, "springConstant": 0.05}, "minVelocity": 0.75, "solver": "forceAtlas2Based"}};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

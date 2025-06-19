@@ -1,0 +1,234 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 750px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "I", "label": "I", "shape": "dot"}, {"color": "#97c2fc", "id": "decision making", "label": "decision making", "shape": "dot"}, {"color": "#97c2fc", "id": "all the little choices", "label": "all the little choices", "shape": "dot"}, {"color": "#97c2fc", "id": "we", "label": "we", "shape": "dot"}, {"color": "#97c2fc", "id": "what", "label": "what", "shape": "dot"}, {"color": "#97c2fc", "id": "someone", "label": "someone", "shape": "dot"}, {"color": "#97c2fc", "id": "think", "label": "think", "shape": "dot"}, {"color": "#97c2fc", "id": "of", "label": "of", "shape": "dot"}, {"color": "#97c2fc", "id": "make", "label": "make", "shape": "dot"}, {"color": "#97c2fc", "id": "eat", "label": "eat", "shape": "dot"}, {"color": "#97c2fc", "id": "text", "label": "text", "shape": "dot"}, {"color": "#97c2fc", "id": "Some", "label": "Some", "shape": "dot"}, {"color": "#97c2fc", "id": "those decisions", "label": "those decisions", "shape": "dot"}, {"color": "#97c2fc", "id": "some", "label": "some", "shape": "dot"}, {"color": "#97c2fc", "id": "they", "label": "they", "shape": "dot"}, {"color": "#97c2fc", "id": "feel", "label": "feel", "shape": "dot"}, {"color": "#97c2fc", "id": "take", "label": "take", "shape": "dot"}, {"color": "#97c2fc", "id": "some choices", "label": "some choices", "shape": "dot"}, {"color": "#97c2fc", "id": "others", "label": "others", "shape": "dot"}, {"color": "#97c2fc", "id": "wondered", "label": "wondered", "shape": "dot"}, {"color": "#97c2fc", "id": "makes", "label": "makes", "shape": "dot"}, {"color": "#97c2fc", "id": "easy", "label": "easy", "shape": "dot"}, {"color": "#97c2fc", "id": "choices", "label": "choices", "shape": "dot"}, {"color": "#97c2fc", "id": "the idea", "label": "the idea", "shape": "dot"}, {"color": "#97c2fc", "id": "pros and cons lists", "label": "pros and cons lists", "shape": "dot"}, {"color": "#97c2fc", "id": "those", "label": "those", "shape": "dot"}, {"color": "#97c2fc", "id": "it", "label": "it", "shape": "dot"}, {"color": "#97c2fc", "id": "things", "label": "things", "shape": "dot"}, {"color": "#97c2fc", "id": "heard", "label": "heard", "shape": "dot"}, {"color": "#97c2fc", "id": "about", "label": "about", "shape": "dot"}, {"color": "#97c2fc", "id": "idea", "label": "idea", "shape": "dot"}, {"color": "#97c2fc", "id": "tried", "label": "tried", "shape": "dot"}, {"color": "#97c2fc", "id": "using", "label": "using", "shape": "dot"}, {"color": "#97c2fc", "id": "confusing", "label": "confusing", "shape": "dot"}, {"color": "#97c2fc", "id": "one side", "label": "one side", "shape": "dot"}, {"color": "#97c2fc", "id": "more \u0027points", "label": "more \u0027points", "shape": "dot"}, {"color": "#97c2fc", "id": "the decision", "label": "the decision", "shape": "dot"}, {"color": "#97c2fc", "id": "has", "label": "has", "shape": "dot"}, {"color": "#97c2fc", "id": "side", "label": "side", "shape": "dot"}, {"color": "#97c2fc", "id": "points", "label": "points", "shape": "dot"}, {"color": "#97c2fc", "id": "good", "label": "good", "shape": "dot"}, {"color": "#97c2fc", "id": "logic", "label": "logic", "shape": "dot"}, {"color": "#97c2fc", "id": "guess", "label": "guess", "shape": "dot"}, {"color": "#97c2fc", "id": "\u2019s", "label": "\u2019s", "shape": "dot"}, {"color": "#97c2fc", "id": "more", "label": "more", "shape": "dot"}, {"color": "#97c2fc", "id": "to", "label": "to", "shape": "dot"}, {"color": "#97c2fc", "id": "than", "label": "than", "shape": "dot"}, {"color": "#97c2fc", "id": "emotions", "label": "emotions", "shape": "dot"}, {"color": "#97c2fc", "id": "a big role", "label": "a big role", "shape": "dot"}, {"color": "#97c2fc", "id": "read", "label": "read", "shape": "dot"}, {"color": "#97c2fc", "id": "play", "label": "play", "shape": "dot"}, {"color": "#97c2fc", "id": "role", "label": "role", "shape": "dot"}, {"color": "#97c2fc", "id": "you", "label": "you", "shape": "dot"}, {"color": "#97c2fc", "id": "worse decisions", "label": "worse decisions", "shape": "dot"}, {"color": "#97c2fc", "id": "\u2019re", "label": "\u2019re", "shape": "dot"}, {"color": "#97c2fc", "id": "decisions", "label": "decisions", "shape": "dot"}, {"color": "#97c2fc", "id": "That", "label": "That", "shape": "dot"}, {"color": "#97c2fc", "id": "me", "label": "me", "shape": "dot"}, {"color": "#97c2fc", "id": "feels", "label": "feels", "shape": "dot"}, {"color": "#97c2fc", "id": "order junk food", "label": "order junk food", "shape": "dot"}, {"color": "#97c2fc", "id": "energy", "label": "energy", "shape": "dot"}, {"color": "#97c2fc", "id": "procrastinate", "label": "procrastinate", "shape": "dot"}, {"color": "#97c2fc", "id": "\u2019m", "label": "\u2019m", "shape": "dot"}, {"color": "#97c2fc", "id": "on", "label": "on", "shape": "dot"}, {"color": "#97c2fc", "id": "my options", "label": "my options", "shape": "dot"}, {"color": "#97c2fc", "id": "rested", "label": "rested", "shape": "dot"}, {"color": "#97c2fc", "id": "weigh", "label": "weigh", "shape": "dot"}, {"color": "#97c2fc", "id": "options", "label": "options", "shape": "dot"}, {"color": "#97c2fc", "id": "a psychology class", "label": "a psychology class", "shape": "dot"}, {"color": "#97c2fc", "id": "something", "label": "something", "shape": "dot"}, {"color": "#97c2fc", "id": "\u0027heuristics", "label": "\u0027heuristics", "shape": "dot"}, {"color": "#97c2fc", "id": "which", "label": "which", "shape": "dot"}, {"color": "#97c2fc", "id": "mental shortcuts", "label": "mental shortcuts", "shape": "dot"}, {"color": "#97c2fc", "id": "took", "label": "took", "shape": "dot"}, {"color": "#97c2fc", "id": "class", "label": "class", "shape": "dot"}, {"color": "#97c2fc", "id": "talked", "label": "talked", "shape": "dot"}, {"color": "#97c2fc", "id": "are", "label": "are", "shape": "dot"}, {"color": "#97c2fc", "id": "like", "label": "like", "shape": "dot"}, {"color": "#97c2fc", "id": "them", "label": "them", "shape": "dot"}, {"color": "#97c2fc", "id": "use", "label": "use", "shape": "dot"}, {"color": "#97c2fc", "id": "without", "label": "without", "shape": "dot"}, {"color": "#97c2fc", "id": "gut feelings", "label": "gut feelings", "shape": "dot"}, {"color": "#97c2fc", "id": "made", "label": "made", "shape": "dot"}, {"color": "#97c2fc", "id": "realize", "label": "realize", "shape": "dot"}, {"color": "#97c2fc", "id": "rely", "label": "rely", "shape": "dot"}, {"color": "#97c2fc", "id": "thought", "label": "thought", "shape": "dot"}, {"color": "#97c2fc", "id": "that", "label": "that", "shape": "dot"}, {"color": "#97c2fc", "id": "the situation", "label": "the situation", "shape": "dot"}, {"color": "#97c2fc", "id": "wonder", "label": "wonder", "shape": "dot"}, {"color": "#97c2fc", "id": "seems", "label": "seems", "shape": "dot"}, {"color": "#97c2fc", "id": "depends", "label": "depends", "shape": "dot"}, {"color": "#97c2fc", "id": "good decision making", "label": "good decision making", "shape": "dot"}, {"color": "#97c2fc", "id": "hope", "label": "hope", "shape": "dot"}, {"color": "#97c2fc", "id": "noticing", "label": "noticing", "shape": "dot"}, {"color": "#97c2fc", "id": "get", "label": "get", "shape": "dot"}, {"color": "#97c2fc", "id": "at", "label": "at", "shape": "dot"}, {"color": "#97c2fc", "id": "rushing", "label": "rushing", "shape": "dot"}, {"color": "#97c2fc", "id": "avoiding", "label": "avoiding", "shape": "dot"}, {"color": "#97c2fc", "id": "habits", "label": "habits", "shape": "dot"}, {"color": "#97c2fc", "id": "stress", "label": "stress", "shape": "dot"}, {"color": "#97c2fc", "id": "pressure", "label": "pressure", "shape": "dot"}, {"color": "#97c2fc", "id": "other people", "label": "other people", "shape": "dot"}, {"color": "#97c2fc", "id": "want", "label": "want", "shape": "dot"}, {"color": "#97c2fc", "id": "aware", "label": "aware", "shape": "dot"}, {"color": "#97c2fc", "id": "influencing", "label": "influencing", "shape": "dot"}, {"color": "#97c2fc", "id": "from", "label": "from", "shape": "dot"}, {"color": "#97c2fc", "id": "the first step", "label": "the first step", "shape": "dot"}, {"color": "#97c2fc", "id": "my decisions", "label": "my decisions", "shape": "dot"}, {"color": "#97c2fc", "id": "time pressure", "label": "time pressure", "shape": "dot"}, {"color": "#97c2fc", "id": "social pressure", "label": "social pressure", "shape": "dot"}, {"color": "#97c2fc", "id": "started", "label": "started", "shape": "dot"}, {"color": "#97c2fc", "id": "influenced", "label": "influenced", "shape": "dot"}, {"color": "#97c2fc", "id": "much", "label": "much", "shape": "dot"}, {"color": "#97c2fc", "id": "have", "label": "have", "shape": "dot"}, {"color": "#97c2fc", "id": "go", "label": "go", "shape": "dot"}, {"color": "#97c2fc", "id": "with", "label": "with", "shape": "dot"}, {"color": "#97c2fc", "id": "myself", "label": "myself", "shape": "dot"}, {"color": "#97c2fc", "id": "watching", "label": "watching", "shape": "dot"}, {"color": "#97c2fc", "id": "people", "label": "people", "shape": "dot"}, {"color": "#97c2fc", "id": "a way", "label": "a way", "shape": "dot"}, {"color": "#97c2fc", "id": "the moment", "label": "the moment", "shape": "dot"}, {"color": "#97c2fc", "id": "a good decision", "label": "a good decision", "shape": "dot"}, {"color": "#97c2fc", "id": "wish", "label": "wish", "shape": "dot"}, {"color": "#97c2fc", "id": "was", "label": "was", "shape": "dot"}, {"color": "#97c2fc", "id": "way", "label": "way", "shape": "dot"}, {"color": "#97c2fc", "id": "know", "label": "know", "shape": "dot"}, {"color": "#97c2fc", "id": "in", "label": "in", "shape": "dot"}, {"color": "#97c2fc", "id": "making", "label": "making", "shape": "dot"}, {"color": "#97c2fc", "id": "decision", "label": "decision", "shape": "dot"}, {"color": "#97c2fc", "id": "the difference", "label": "the difference", "shape": "dot"}, {"color": "#97c2fc", "id": "a gut feeling", "label": "a gut feeling", "shape": "dot"}, {"color": "#97c2fc", "id": "one", "label": "one", "shape": "dot"}, {"color": "#97c2fc", "id": "just fear", "label": "just fear", "shape": "dot"}, {"color": "#97c2fc", "id": "tell", "label": "tell", "shape": "dot"}, {"color": "#97c2fc", "id": "difference", "label": "difference", "shape": "dot"}, {"color": "#97c2fc", "id": "between", "label": "between", "shape": "dot"}, {"color": "#97c2fc", "id": "fear", "label": "fear", "shape": "dot"}, {"color": "#97c2fc", "id": "decision fatigue", "label": "decision fatigue", "shape": "dot"}, {"color": "#97c2fc", "id": "the more choices", "label": "the more choices", "shape": "dot"}, {"color": "#97c2fc", "id": "a day", "label": "a day", "shape": "dot"}, {"color": "#97c2fc", "id": "routines", "label": "routines", "shape": "dot"}, {"color": "#97c2fc", "id": "help", "label": "help", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "think", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "think", "title": "prep", "to": "of"}, {"arrows": "to", "from": "make", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "make", "title": "nsubj", "to": "you"}, {"arrows": "to", "from": "make", "title": "dobj", "to": "decisions"}, {"arrows": "to", "from": "make", "title": "prep", "to": "in"}, {"arrows": "to", "from": "eat", "title": "dobj", "to": "what"}, {"arrows": "to", "from": "text", "title": "dobj", "to": "someone"}, {"arrows": "to", "from": "Some", "title": "prep", "to": "of"}, {"arrows": "to", "from": "feel", "title": "nsubj", "to": "Some"}, {"arrows": "to", "from": "feel", "title": "nsubj", "to": "some"}, {"arrows": "to", "from": "feel", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "take", "title": "nsubj", "to": "they"}, {"arrows": "to", "from": "wondered", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "makes", "title": "nsubj", "to": "what"}, {"arrows": "to", "from": "makes", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "easy", "title": "nsubj", "to": "choices"}, {"arrows": "to", "from": "things", "title": "prep", "to": "like"}, {"arrows": "to", "from": "heard", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "heard", "title": "prep", "to": "about"}, {"arrows": "to", "from": "idea", "title": "prep", "to": "of"}, {"arrows": "to", "from": "tried", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "using", "title": "dobj", "to": "those"}, {"arrows": "to", "from": "confusing", "title": "nsubj", "to": "things"}, {"arrows": "to", "from": "has", "title": "nsubj", "to": "side"}, {"arrows": "to", "from": "has", "title": "dobj", "to": "points"}, {"arrows": "to", "from": "good", "title": "prep", "to": "about"}, {"arrows": "to", "from": "guess", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "guess", "title": "dobj", "to": "myself"}, {"arrows": "to", "from": "\u2019s", "title": "dobj", "to": "more"}, {"arrows": "to", "from": "\u2019s", "title": "prep", "to": "to"}, {"arrows": "to", "from": "\u2019s", "title": "prep", "to": "than"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "that"}, {"arrows": "to", "from": "\u2019s", "title": "attr", "to": "fear"}, {"arrows": "to", "from": "\u2019s", "title": "nsubj", "to": "That"}, {"arrows": "to", "from": "read", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "play", "title": "nsubj", "to": "emotions"}, {"arrows": "to", "from": "play", "title": "dobj", "to": "role"}, {"arrows": "to", "from": "\u2019re", "title": "nsubj", "to": "you"}, {"arrows": "to", "from": "feels", "title": "nsubj", "to": "That"}, {"arrows": "to", "from": "feels", "title": "nsubj", "to": "what"}, {"arrows": "to", "from": "procrastinate", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "\u2019m", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "\u2019m", "title": "prep", "to": "on"}, {"arrows": "to", "from": "rested", "title": "nsubj", "to": "\u2019m"}, {"arrows": "to", "from": "weigh", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "weigh", "title": "dobj", "to": "options"}, {"arrows": "to", "from": "took", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "took", "title": "dobj", "to": "class"}, {"arrows": "to", "from": "talked", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "talked", "title": "prep", "to": "about"}, {"arrows": "to", "from": "are", "title": "nsubj", "to": "which"}, {"arrows": "to", "from": "are", "title": "prep", "to": "like"}, {"arrows": "to", "from": "like", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "use", "title": "nsubj", "to": "we"}, {"arrows": "to", "from": "use", "title": "dobj", "to": "them"}, {"arrows": "to", "from": "use", "title": "prep", "to": "without"}, {"arrows": "to", "from": "made", "title": "nsubj", "to": "That"}, {"arrows": "to", "from": "realize", "title": "nsubj", "to": "me"}, {"arrows": "to", "from": "rely", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "rely", "title": "prep", "to": "on"}, {"arrows": "to", "from": "thought", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "wonder", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "seems", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "seems", "title": "nsubj", "to": "That"}, {"arrows": "to", "from": "seems", "title": "prep", "to": "like"}, {"arrows": "to", "from": "depends", "title": "nsubj", "to": "it"}, {"arrows": "to", "from": "depends", "title": "prep", "to": "on"}, {"arrows": "to", "from": "hope", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "get", "title": "prep", "to": "at"}, {"arrows": "to", "from": "get", "title": "nsubj", "to": "they"}, {"arrows": "to", "from": "rushing", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "avoiding", "title": "dobj", "to": "decisions"}, {"arrows": "to", "from": "pressure", "title": "prep", "to": "from"}, {"arrows": "to", "from": "want", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "aware", "title": "prep", "to": "of"}, {"arrows": "to", "from": "influencing", "title": "nsubj", "to": "what"}, {"arrows": "to", "from": "influencing", "title": "dobj", "to": "me"}, {"arrows": "to", "from": "influencing", "title": "prep", "to": "like"}, {"arrows": "to", "from": "started", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "influenced", "title": "dobj", "to": "much"}, {"arrows": "to", "from": "have", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "go", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "go", "title": "prep", "to": "with"}, {"arrows": "to", "from": "watching", "title": "nsubj", "to": "people"}, {"arrows": "to", "from": "wish", "title": "nsubj", "to": "I"}, {"arrows": "to", "from": "was", "title": "attr", "to": "way"}, {"arrows": "to", "from": "know", "title": "prep", "to": "in"}, {"arrows": "to", "from": "making", "title": "nsubj", "to": "you"}, {"arrows": "to", "from": "making", "title": "dobj", "to": "decision"}, {"arrows": "to", "from": "tell", "title": "nsubj", "to": "you"}, {"arrows": "to", "from": "tell", "title": "dobj", "to": "difference"}, {"arrows": "to", "from": "difference", "title": "prep", "to": "between"}, {"arrows": "to", "from": "help", "title": "nsubj", "to": "routines"}, {"arrows": "to", "from": "help", "title": "dobj", "to": "much"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"shape": "dot", "font": {"size": 14}}, "edges": {"font": {"size": 12, "align": "middle"}, "arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}}, "physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 150, "springConstant": 0.05}, "minVelocity": 0.75, "solver": "forceAtlas2Based"}};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
