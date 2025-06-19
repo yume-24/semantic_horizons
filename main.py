@@ -71,3 +71,12 @@ for expert_path, novice_path, topic in topic_inputs:
 output_path = "outputs/results.csv"
 stats_df.to_csv(output_path, index=False)
 print(f"\nAll topics complete. Results saved to: {output_path}")
+
+
+labeled_df = stats_df.copy()
+labeled_df["Label"] = labeled_df.apply(
+    lambda row: "Expert" if row["Avg Cosine Similarity (Expert)"] > row["Avg Cosine Similarity (Novice)"] else "Novice",
+    axis=1
+)
+labeled_df.to_csv("outputs/labeled_results.csv", index=False)
+print("✅ Saved both results.csv and labeled_results.csv")
